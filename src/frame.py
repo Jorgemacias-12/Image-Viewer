@@ -1,7 +1,4 @@
 from tkinter import *
-from PIL import Image, ImageTk
-
-import requests
 
 import utils
 
@@ -14,7 +11,8 @@ def main():
     menubar = Menu(root)
    
     folderMenu = Menu(menubar, tearoff=0)
-    folderMenu.add_command(label="Open Folder", command=None)
+    folderMenu.add_command(label="Open Folder", 
+                           command=lambda: utils.loadFolderAction(infoView, prevButton, nextButton,))
     
     menubar.add_cascade(label="File", menu=folderMenu)
     
@@ -37,7 +35,9 @@ def main():
                         bg="#5600ff",
                         padx=10,
                         pady=10,
-                        font=("Roboto", 16, "bold"))
+                        font=("Roboto", 16, "bold"),
+                        command= lambda: utils.prevImage(imageView, infoView),
+                        state=DISABLED,)
     
     nextButton = Button(root,
                         text=">",
@@ -45,7 +45,9 @@ def main():
                         bg="#5600ff",
                         padx=10,
                         pady=10,
-                        font=("Roboto", 16, "bold"))
+                        font=("Roboto", 16, "bold"),
+                        command= lambda: utils.nextImage(imageView, infoView),
+                        state=DISABLED,)
     
     prevButton.grid(column=0, row=0)
     imageView.grid(column=1, row=0)
@@ -53,5 +55,5 @@ def main():
     infoView.grid(column=1, row=1, sticky=W+E)
     
     root.after(0, lambda: utils.initViewLabel(imageView))
-        
+
     root.mainloop()
